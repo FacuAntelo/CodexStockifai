@@ -54,6 +54,7 @@ export class LocalizadorComponent implements OnDestroy {
 
         this.loading = true;
 
+
         // Se mantiene la referencia al servicio para restaurar la llamada real más adelante.
         void this.repuestosService;
 
@@ -140,6 +141,23 @@ export class LocalizadorComponent implements OnDestroy {
             this.numeroPieza = termino;
             setTimeout(() => this.inicializarMapa(), 0);
         }, 400);
+
+        this.repuestosService.localizarParte(termino).subscribe({
+            next: (resp) => {
+                this.resultado = resp;
+                this.ultimaBusqueda = termino;
+                this.loading = false;
+                this.numeroPieza = termino;
+                setTimeout(() => this.inicializarMapa(), 0);
+            },
+            error: () => {
+                this.errorMessage = 'No pudimos consultar la disponibilidad. Intentá nuevamente.';
+                this.loading = false;
+                this.resultado = undefined;
+                this.destruirMapa();
+            },
+        });
+
     }
 
     limpiarBusqueda() {
