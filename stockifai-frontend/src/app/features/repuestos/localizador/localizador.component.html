@@ -1,0 +1,95 @@
+<div class="localizador-wrapper">
+    <div class="search-panel">
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Ingresá el número de pieza"
+                [(ngModel)]="numeroPieza"
+                (keyup.enter)="buscar()"
+                [disabled]="loading"
+            />
+            <button class="btn btn-primary" type="button" (click)="buscar()" [disabled]="loading">
+                {{ loading ? 'Buscando…' : 'Buscar' }}
+            </button>
+            <button
+                *ngIf="numeroPieza"
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="limpiarBusqueda()"
+                [disabled]="loading"
+            >
+                Limpiar
+            </button>
+        </div>
+        <p class="text-muted small mt-2 mb-0">
+            Encontrá rápidamente qué talleres tienen stock disponible del repuesto que necesitás.
+        </p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="resultado && !resultado.repuesto && !errorMessage" class="alert alert-warning mt-3" role="alert">
+        No encontramos un repuesto con el número <strong>{{ ultimaBusqueda }}</strong>.
+    </div>
+
+    <ng-container *ngIf="repuestoSeleccionado as repuesto">
+        <div *ngIf="talleres.length === 0" class="alert alert-info mt-3" role="alert">
+            <div>
+                <strong>{{ repuesto.numero_pieza }}</strong>
+                <span class="text-muted ms-2">{{ repuesto.descripcion }}</span>
+            </div>
+            <div class="mt-2">No encontramos talleres con stock disponible para este repuesto en este momento.</div>
+        </div>
+
+        <div class="row mt-4" *ngIf="talleres.length > 0">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="card h-100">
+                    <div class="card-header d-flex flex-column">
+                        <span class="fw-bold">Talleres con stock</span>
+                        <small class="text-muted">Número de pieza: {{ repuesto.numero_pieza }}</small>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item" *ngFor="let taller of talleres; trackBy: trackByTaller">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ taller.nombre }}</h6>
+                                        <p class="mb-1 text-muted small">
+                                            {{ taller.direccion || 'Sin dirección registrada' }}
+                                        </p>
+                                        <div class="contactos text-muted small">
+                                            <span *ngIf="taller.telefono">Tel: {{ taller.telefono }}</span>
+                                            <span *ngIf="taller.email" class="ms-2">Email: {{ taller.email }}</span>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">{{ taller.stock_total }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="fw-bold">Mapa de disponibilidad</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div
+                            *ngIf="talleresConCoordenadas.length > 0"
+                            class="map-container"
+                            #mapContainer
+                        ></div>
+                        <div *ngIf="talleresConCoordenadas.length === 0" class="p-4 text-center text-muted">
+                            Aún no tenemos coordenadas cargadas para estos talleres.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
