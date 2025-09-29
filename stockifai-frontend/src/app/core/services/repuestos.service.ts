@@ -43,6 +43,7 @@ export class RepuestosService {
     }
 
     localizarParte(numeroPieza: string): Observable<LocalizadorPartesResponse> {
+
         // TODO: restaurar la consulta real cuando la API de localizador vuelva a estar disponible.
         // const params = new HttpParams().set('numero_pieza', numeroPieza);
         // return this.restService.get<LocalizadorPartesResponse>('localizador-partes', params);
@@ -107,5 +108,6 @@ export class RepuestosService {
         };
 
         return of(respuestaSimulada).pipe(delay(400));
+
     }
 }

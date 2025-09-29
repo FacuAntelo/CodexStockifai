@@ -9,7 +9,9 @@ declare const L: any;
 @Component({
     selector: 'app-localizador',
     templateUrl: './localizador.component.html',
+
     styleUrls: ['./localizador.component.scss'],
+
 })
 export class LocalizadorComponent implements OnDestroy {
     numeroPieza = '';
@@ -54,6 +56,7 @@ export class LocalizadorComponent implements OnDestroy {
 
         this.loading = true;
 
+
         this.repuestosService.localizarParte(termino).subscribe({
             next: (resp) => {
                 this.resultado = resp;
@@ -69,6 +72,7 @@ export class LocalizadorComponent implements OnDestroy {
                 this.destruirMapa();
             },
         });
+
     }
 
     limpiarBusqueda() {
@@ -122,11 +126,13 @@ export class LocalizadorComponent implements OnDestroy {
             this.mapInstance.fitBounds(bounds, { padding: [24, 24] });
         }
 
+
         setTimeout(() => {
             if (this.mapInstance) {
                 this.mapInstance.invalidateSize();
             }
         }, 0);
+
     }
 
     private destruirMapa() {
