@@ -1,7 +1,14 @@
 from django.urls import path
 
+from .localizador import LocalizadorPartesView
 from .movimientos import MovimientosListView
-from .views import ImportarMovimientosView, ImportarStockView, ImportarCatalogoView, DepositosPorTallerView, ConsultarStockView
+from .views import (
+    ConsultarStockView,
+    DepositosPorTallerView,
+    ImportarCatalogoView,
+    ImportarMovimientosView,
+    ImportarStockView,
+)
 urlpatterns = [
     path('importaciones/movimientos', ImportarMovimientosView.as_view(), name='importar-movimientos'),
     path("importaciones/stock", ImportarStockView.as_view(), name="importar-stock"),
@@ -9,6 +16,7 @@ urlpatterns = [
     path("talleres/<int:taller_id>/depositos", DepositosPorTallerView.as_view(), name="depositos-por-taller"),
     path("talleres/<int:taller_id>/movimientos", MovimientosListView.as_view(), name="movimientos-list"),
     path("talleres/<int:taller_id>/stock", ConsultarStockView.as_view(), name="consultar-stock"),
+    path("localizador-partes", LocalizadorPartesView.as_view(), name="localizador-partes"),
 ]
 
 
