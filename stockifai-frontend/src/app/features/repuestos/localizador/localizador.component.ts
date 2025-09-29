@@ -54,6 +54,7 @@ export class LocalizadorComponent implements OnDestroy {
 
         this.loading = true;
 
+
         this.repuestosService.localizarParte(termino).subscribe({
             next: (resp) => {
                 this.resultado = resp;
@@ -69,6 +70,7 @@ export class LocalizadorComponent implements OnDestroy {
                 this.destruirMapa();
             },
         });
+
     }
 
     limpiarBusqueda() {
