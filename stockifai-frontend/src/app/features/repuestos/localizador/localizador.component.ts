@@ -9,7 +9,9 @@ declare const L: any;
 @Component({
     selector: 'app-localizador',
     templateUrl: './localizador.component.html',
-    styleUrl: './localizador.component.scss',
+
+    styleUrls: ['./localizador.component.scss'],
+
 })
 export class LocalizadorComponent implements OnDestroy {
     numeroPieza = '';
@@ -123,6 +125,14 @@ export class LocalizadorComponent implements OnDestroy {
             const bounds = L.latLngBounds(puntos);
             this.mapInstance.fitBounds(bounds, { padding: [24, 24] });
         }
+
+
+        setTimeout(() => {
+            if (this.mapInstance) {
+                this.mapInstance.invalidateSize();
+            }
+        }, 0);
+
     }
 
     private destruirMapa() {
