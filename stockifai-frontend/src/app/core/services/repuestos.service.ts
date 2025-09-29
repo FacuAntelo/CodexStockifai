@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Categoria } from '../models/categoria';
+import { LocalizadorPartesResponse } from '../models/localizador-partes';
 import { Marca } from '../models/marca';
 import { PagedResponse } from '../models/paged-response';
 import { Repuesto } from '../models/repuesto';
@@ -38,5 +39,10 @@ export class RepuestosService {
         formData.append('file', file);
 
         return this.restService.upload('importaciones/catalogo', formData);
+    }
+
+    localizarParte(numeroPieza: string): Observable<LocalizadorPartesResponse> {
+        const params = new HttpParams().set('numero_pieza', numeroPieza);
+        return this.restService.get<LocalizadorPartesResponse>('localizador-partes', params);
     }
 }

@@ -11,6 +11,7 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CatalogoComponent } from './features/repuestos/catalogo/catalogo.component';
 import { CategoriasComponent } from './features/repuestos/categorias/categorias.component';
 import { ForecastingComponent } from './features/repuestos/forecasting/forecasting.component';
+import { LocalizadorComponent } from './features/repuestos/localizador/localizador.component';
 import { MarcasComponent } from './features/repuestos/marcas/marcas.component';
 import { MovimientosComponent } from './features/repuestos/movimientos/movimientos.component';
 import { StockComponent } from './features/repuestos/stock/stock.component';
@@ -34,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
         CatalogoComponent,
         MarcasComponent,
         CategoriasComponent,
+        LocalizadorComponent,
     ],
     imports: [
         BrowserModule,

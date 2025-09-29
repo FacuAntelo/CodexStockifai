@@ -1,4 +1,6 @@
 import json
+from functools import lru_cache
+
 import requests
 from jose import jwt
 from django.conf import settings
@@ -7,15 +9,21 @@ AUTH0_DOMAIN = settings.AUTH0_DOMAIN
 API_IDENTIFIER = settings.AUTH0_AUDIENCE
 ALGORITHMS = settings.ALGORITHMS
 
-# Descarga el JWKS (JSON Web Key Set) de Auth0
 jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
-jwks = requests.get(jwks_url).json()
+
+
+@lru_cache(maxsize=1)
+def get_jwks():
+    response = requests.get(jwks_url, timeout=5)
+    response.raise_for_status()
+    return response.json()
 
 def decode_jwt(token):
     # Extrae el header del token
     header = jwt.get_unverified_header(token)
 
     rsa_key = {}
+    jwks = get_jwks()
     for key in jwks["keys"]:
         if key["kid"] == header["kid"]:
             rsa_key = {
