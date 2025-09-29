@@ -109,3 +109,14 @@ class RepuestoStockSerializer(serializers.Serializer):
     repuesto_taller = RepuestoTallerSerializer()
     stock_total = serializers.IntegerField()
     depositos = StockDepositoDetalleSerializer(many=True)
+
+
+class TallerDisponibilidadSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    nombre = serializers.CharField()
+    direccion = serializers.CharField(allow_blank=True)
+    telefono = serializers.CharField(allow_blank=True)
+    email = serializers.EmailField(allow_blank=True)
+    latitud = serializers.FloatField(allow_null=True)
+    longitud = serializers.FloatField(allow_null=True)
+    stock_total = serializers.IntegerField()
